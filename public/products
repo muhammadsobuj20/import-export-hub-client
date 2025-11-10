@@ -1,0 +1,235 @@
+[
+  {
+    "image": "https://i.ibb.co.com/DDP0g7bQ/Dell-Inspiron-15-Laptop.jpg",
+    "name": "Dell Inspiron 15 Laptop",
+    "price": 850,
+    "origin_country": "USA",
+    "rating": 4.5,
+    "available_quantity": 25
+  },
+  {
+    "image": "https://i.ibb.co.com/bgJLSHzR/Samsung-Galaxy-S23.jpg",
+    "name": "Samsung Galaxy S23",
+    "price": 999,
+    "origin_country": "South Korea",
+    "rating": 4.8,
+    "available_quantity": 40
+  },
+  {
+    "image": "https://i.ibb.co.com/hGJpbtR/Sony-WH-1000-XM5-Headphones.jpg",
+    "name": "Sony WH-1000XM5 Headphones",
+    "price": 379,
+    "origin_country": "Japan",
+    "rating": 4.7,
+    "available_quantity": 30
+  },
+  {
+    "image": "https://i.ibb.co.com/qYjPtvJ7/Apple-Watch-S9-hero.jpg",
+    "name": "Apple Watch Series 9",
+    "price": 449,
+    "origin_country": "USA",
+    "rating": 4.9,
+    "available_quantity": 50
+  },
+  {
+    "image": "https://i.ibb.co.com/gLHwRnjB/Nikon-D7500-DSLR.jpg",
+    "name": "Canon EOS R8 Mirrorless Camera",
+    "price": 1299,
+    "origin_country": "Japan",
+    "rating": 4.8,
+    "available_quantity": 15
+  },
+  {
+    "image": "https://i.ibb.co.com/pv3VPf37/LG-OLED-55-4-K-TV.webp",
+    "name": "LG OLED 55'' 4K TV",
+    "price": 1199,
+    "origin_country": "South Korea",
+    "rating": 4.7,
+    "available_quantity": 22
+  },
+  {
+    "image": "https://i.ibb.co.com/qMjP0vGM/Logitech-MX-Mechanical-Keyboard.jpg",
+    "name": "Logitech MX Mechanical Keyboard",
+    "price": 149,
+    "origin_country": "Switzerland",
+    "rating": 4.6,
+    "available_quantity": 75
+  },
+  {
+    "image": "https://i.ibb.co.com/9mnrVsRr/Razer-Death-Adder-V3-Mouse.webp",
+    "name": "Razer DeathAdder V3 Mouse",
+    "price": 89,
+    "origin_country": "Singapore",
+    "rating": 4.5,
+    "available_quantity": 60
+  },
+  {
+    "image": "https://i.ibb.co.com/FkZGNXFT/apple-ipad-air-2024.jpg",
+    "name": "iPad Air 2024",
+    "price": 699,
+    "origin_country": "USA",
+    "rating": 4.8,
+    "available_quantity": 45
+  },
+  {
+    "image": "https://i.ibb.co.com/zh1VQh3c/One-Plus-Buds-Pro-2.jpg",
+    "name": "OnePlus Buds Pro 2",
+    "price": 149,
+    "origin_country": "China",
+    "rating": 4.6,
+    "available_quantity": 70
+  },
+
+  {
+    "image": "https://i.ibb.co.com/qM4Nq1cY/Acer-Nitro-27-Gaming-Monitor.jpg",
+    "name": "Acer Nitro 27'' Gaming Monitor",
+    "price": 299,
+    "origin_country": "Taiwan",
+    "rating": 4.5,
+    "available_quantity": 33
+  },
+  {
+    "image": "https://i.ibb.co.com/Q3Qtvymx/HP-Laser-Jet-Pro-M404dn.jpg",
+    "name": "HP LaserJet Pro M404dn",
+    "price": 239,
+    "origin_country": "USA",
+    "rating": 4.4,
+    "available_quantity": 18
+  },
+  {
+    "image": "https://i.ibb.co.com/Y7SqT9rm/JBL-Charge-5-Bluetooth.jpg",
+    "name": "JBL Charge 5 Bluetooth Speaker",
+    "price": 179,
+    "origin_country": "USA",
+    "rating": 4.7,
+    "available_quantity": 80
+  },
+  {
+    "image": "https://i.ibb.co.com/bghtKWnp/Philips-Air-Fryer-XXLl.jpg",
+    "name": "Philips Air Fryer XXL",
+    "price": 199,
+    "origin_country": "Netherlands",
+    "rating": 4.6,
+    "available_quantity": 55
+  },
+  {
+    "image": "https://i.ibb.co.com/m5pxL3px/TP-Link-AX1800-Wi-Fi-6-Router.jpg",
+    "name": "TP-Link AX1800 Wi-Fi 6 Router",
+    "price": 129,
+    "origin_country": "China",
+    "rating": 4.4,
+    "available_quantity": 48
+  },
+  {
+    "image": "https://i.ibb.co.com/99xrMsrC/Anker-20-000m-Ah-Power-Bank.jpg",
+    "name": "Anker 20,000mAh Power Bank",
+    "price": 79,
+    "origin_country": "China",
+    "rating": 4.8,
+    "available_quantity": 90
+  },
+  {
+    "image": "https://i.ibb.co.com/JwTcV2c7/Secretlab-Titan-Evo-Gaming.webp",
+    "name": "Secretlab Titan Evo Gaming Chair",
+    "price": 549,
+    "origin_country": "Singapore",
+    "rating": 4.9,
+    "available_quantity": 28
+  },
+  {
+    "image": "https://i.ibb.co.com/1fKggYBP/Xiaomi-MI-A2-43-inch-Smart-LED-TV.jpg",
+    "name": "Xiaomi 43'' Smart TV",
+    "price": 399,
+    "origin_country": "China",
+    "rating": 4.6,
+    "available_quantity": 60
+  },
+  {
+    "image": "https://i.ibb.co.com/4gfgdBMc/samsung-double-door-refrigerator.jpg",
+    "name": "Samsung 300L Double Door Fridge",
+    "price": 799,
+    "origin_country": "South Korea",
+    "rating": 4.8,
+    "available_quantity": 35
+  },
+  {
+    "image": "https://i.ibb.co.com/C5mghSJP/LG-Front-Load-Washing-Machine.jpg",
+    "name": "LG Front Load Washing Machine",
+    "price": 649,
+    "origin_country": "South Korea",
+    "rating": 4.7,
+    "available_quantity": 30
+  },
+  {
+    "image": "https://i.ibb.co.com/ymCQpsPM/Nespresso-Vertuo-Coffee-Maker.jpg",
+    "name": "Nespresso Vertuo Coffee Maker",
+    "price": 199,
+    "origin_country": "Switzerland",
+    "rating": 4.5,
+    "available_quantity": 40
+  },
+  {
+    "image": "https://i.ibb.co.com/LXT1Q662/Panasonic-25-L-Microwave-Oven.jpg",
+    "name": "Panasonic 25L Microwave Oven",
+    "price": 229,
+    "origin_country": "Japan",
+    "rating": 4.6,
+    "available_quantity": 38
+  },
+  {
+    "image": "https://i.ibb.co.com/Wvx8kdgk/Dyson-V12-Detect-Slim-Vacuum.jpg",
+    "name": "Dyson V12 Detect Slim Vacuum",
+    "price": 649,
+    "origin_country": "UK",
+    "rating": 4.9,
+    "available_quantity": 20
+  },
+  {
+    "image": "https://i.ibb.co.com/4RTNQJgW/Samsung-1-TB-SSD-980-PRO.jpg",
+    "name": "Samsung 1TB SSD 980 PRO",
+    "price": 129,
+    "origin_country": "South Korea",
+    "rating": 4.9,
+    "available_quantity": 85
+  },
+  {
+    "image": "https://i.ibb.co.com/BKFsFX7V/NVIDIA-RTX-4070-GPU.jpg",
+    "name": "NVIDIA RTX 4070 GPU",
+    "price": 649,
+    "origin_country": "USA",
+    "rating": 4.9,
+    "available_quantity": 18
+  },
+  {
+    "image": "https://i.ibb.co.com/hxbfY5g9/Intel-Core-i9-13900-K.jpg",
+    "name": "Intel Core i9 13900K",
+    "price": 599,
+    "origin_country": "USA",
+    "rating": 4.8,
+    "available_quantity": 25
+  },
+  {
+    "image": "https://i.ibb.co.com/zhLxP5wR/ASUS-ROG-Strix-Z790-Motherboard.jpg",
+    "name": "ASUS ROG Strix Z790 Motherboard",
+    "price": 349,
+    "origin_country": "Taiwan",
+    "rating": 4.7,
+    "available_quantity": 40
+  },
+  {
+    "image": "https://i.ibb.co.com/JjfXn6nM/corsair-vengeance-32gb-ddr5-gaming-ram-deal.jpg",
+    "name": "Corsair Vengeance 32GB DDR5",
+    "price": 189,
+    "origin_country": "USA",
+    "rating": 4.8,
+    "available_quantity": 70
+  },
+  {
+    "image": "https://i.ibb.co.com/1fty9dYQ/Play-Station5.webp",
+    "name": "Sony PlayStation 5",
+    "price": 499,
+    "origin_country": "Japan",
+    "rating": 5.0,
+    "available_quantity": 15
+  }
+]
