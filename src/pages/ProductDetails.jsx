@@ -23,7 +23,7 @@ const ProductDetails = () => {
       try {
         const res = await fetch(`http://localhost:3000/product/${id}`);
         const data = await res.json();
-        setProduct(data || {}); // ✅ Backend সরাসরি object পাঠাচ্ছে
+        setProduct(data || {});
       } catch (error) {
         console.error("Error fetching product details:", error);
         toast.error("Failed to load product details.");
@@ -54,12 +54,15 @@ const ProductDetails = () => {
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:3000/product/${product._id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          `http://localhost:3000/product/${product._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await res.json();
 
@@ -80,7 +83,7 @@ const ProductDetails = () => {
   const handleDownload = async () => {
     if (!product?._id) {
       toast.error("Product ID not found!");
-      navigate("/my-exports")
+      navigate("/my-exports");
       return;
     }
 
@@ -88,7 +91,7 @@ const ProductDetails = () => {
       name: product?.name,
       origin_country: product?.origin_country,
       image: product?.image,
-      downloaded_by: user?.email, // ✅ backend এ এটা expected ফিল্ড
+      downloaded_by: user?.email,
       downloaded_at: new Date(),
     };
 
@@ -115,16 +118,16 @@ const ProductDetails = () => {
     }
   };
 
-  // 🔹 Loader UI
+  //  Loader UI
   if (loading || !product?._id) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
-        <span className="loading loading-dots loading-lg text-pink-600"></span>
+        <span className="loading loading-dots loading-lg text-purple-600"></span>
       </div>
     );
   }
 
-  // 🔹 Main UI
+  //  Main UI
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-6 lg:p-8">
       <div className="card bg-base-100 shadow-xl border border-gray-200 rounded-2xl overflow-hidden">
@@ -154,22 +157,21 @@ const ProductDetails = () => {
             <div className="flex gap-3 mt-6">
               <Link
                 to={`/update-product/${product._id}`}
-                className="btn btn-primary rounded-full bg-gradient-to-r from-pink-500 to-red-600 text-white border-0 hover:from-pink-600 hover:to-red-700"
+                className="btn  text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 Update
               </Link>
 
               <button
                 onClick={handleDownload}
-                className="btn btn-secondary rounded-full"
+                className="btn text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 Download
               </button>
 
-              <Link 
-            
+              <Link
                 onClick={handleDelete}
-                className="btn btn-outline rounded-full border-gray-300 hover:border-pink-500 hover:text-pink-600"
+                className="btn text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 Delete
               </Link>

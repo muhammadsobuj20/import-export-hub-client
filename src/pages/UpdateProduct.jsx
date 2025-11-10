@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const UpdateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+ 
 
   const [product, setProduct] = useState({
     name: "",
@@ -19,7 +19,7 @@ const UpdateProduct = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Fetch product details
+  //  Fetch product details
   useEffect(() => {
     if (!id) return;
 
@@ -74,18 +74,20 @@ const UpdateProduct = () => {
   };
 
   //  Loading Spinner
-  if (loading)
+  if (loading){
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
-        <span className="loading loading-dots loading-lg text-pink-600"></span>
+        <span className="loading loading-dots loading-lg text-purple-600"></span>
       </div>
     );
+  }
+    
 
   // Form 
   return (
     <div className="max-w-3xl mx-auto bg-base-100 shadow-xl rounded-2xl p-6 my-8">
       <h1 className="text-3xl font-bold text-center mb-6 text-pink-600">
-        ✏️ Update Product
+         Update Product
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Product Name */}
@@ -172,7 +174,7 @@ const UpdateProduct = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="btn btn-primary w-full bg-gradient-to-r from-pink-500 to-red-600 text-white border-0 hover:from-pink-600 hover:to-red-700"
+           className="btn w-full text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
         >
           Update Product
         </button>
