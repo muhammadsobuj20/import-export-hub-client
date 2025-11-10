@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import ProductDetails from "../pages/ProductDetails";
 import MyImports from "../pages/MyImports";
 import MyExports from "../pages/MyExports";
+import UpdateProduct from "../pages/UpdateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -68,16 +69,16 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // {
-      //   path: "/update-model/:id",
-      //   element: (
-      //     <PrivateRoute>
-      //       <UpdateModel />
-      //     </PrivateRoute>
-      //   ),
-      //   loader: ({ params }) =>
-      //     fetch(`https://3d-model-server.vercel.app/models/${params.id}`),
-      // },
+      {
+        path: "/update-product/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateProduct />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/products/${params.id}`),
+      },
       {
         path: "/login",
         element: <Login />,
