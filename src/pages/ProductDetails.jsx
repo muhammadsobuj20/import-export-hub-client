@@ -68,7 +68,7 @@ const ProductDetails = () => {
 
         if (data.success) {
           toast.success("Product deleted successfully!");
-          navigate("/all-products");
+          navigate("/all-product");
         } else {
           toast.error("Delete failed!");
         }
@@ -79,23 +79,33 @@ const ProductDetails = () => {
     }
   };
 
-  // 🔹 Handle Download (Import)
+  //  Handle Download (Import)
   const handleDownload = async () => {
     if (!product?._id) {
       toast.error("Product ID not found!");
-      navigate("/my-exports");
+      navigate("/all-product");
       return;
     }
 
-    const finalProduct = {
-      name: product?.name,
-      origin_country: product?.origin_country,
-      image: product?.image,
-      downloaded_by: user?.email,
-      downloaded_at: new Date(),
-    };
-
     try {
+      const checkRes = await fetch(
+        `http://localhost:3000/imports/check/${product._id}?email=${user?.email}`
+      );
+      const checkData = await checkRes.json();
+
+      if (checkData.exists) {
+        toast.error("You already downloaded this product!");
+        return;
+      }
+
+      const finalProduct = {
+        name: product?.name,
+        origin_country: product?.origin_country,
+        image: product?.image,
+        downloaded_by: user?.email,
+        downloaded_at: new Date(),
+      };
+
       const res = await fetch(`http://localhost:3000/imports/${product._id}`, {
         method: "POST",
         headers: {
