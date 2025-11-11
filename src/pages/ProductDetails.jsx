@@ -7,7 +7,7 @@ import usePageTitle from "../Hooks/usePageTitle";
 
 
 const ProductDetails = () => {
-   usePageTitle("Export Import Hub | ProductDetails");
+   usePageTitle("ExportImportHub | ProductDetails");
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState({});
