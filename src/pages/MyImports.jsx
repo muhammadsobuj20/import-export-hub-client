@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import usePageTitle from "../Hooks/usePageTitle";
 
 const MyDownloads = () => {
-   usePageTitle("Export Import Hub | MyImports");
+   usePageTitle("ExportImportHub | MyImports");
   const { user } = use(AuthContext);
   const [imports, setImports] = useState([]);
   const [loading, setLoading] = useState(true);
