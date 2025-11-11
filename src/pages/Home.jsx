@@ -4,7 +4,7 @@ import ProductCard from "../components/ProductCard";
 import usePageTitle from "../Hooks/usePageTitle";
 
 const Home = () => {
-   usePageTitle("Export Import Hub | Home");
+   usePageTitle("ExportImportHub | Home");
   const products = useLoaderData();
 
   return (
