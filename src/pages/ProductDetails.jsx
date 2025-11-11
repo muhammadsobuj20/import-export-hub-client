@@ -3,8 +3,11 @@ import { useEffect, useState, useContext } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthContext";
+import usePageTitle from "../Hooks/usePageTitle";
+
 
 const ProductDetails = () => {
+   usePageTitle("Export Import Hub | ProductDetails");
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState({});
@@ -12,7 +15,8 @@ const ProductDetails = () => {
   const { user } = useContext(AuthContext);
   const [refetch, setRefetch] = useState(false);
 
-  // 🔹 Fetch product details
+
+  // Fetch product details
   useEffect(() => {
     const fetchProduct = async () => {
       if (!id) {
@@ -33,7 +37,8 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id, refetch]);
 
-  // 🔹 Handle Delete Product
+
+  // Handle Delete Product
   const handleDelete = async () => {
     if (!product?._id) {
       toast.error("Product ID not found!");
@@ -125,15 +130,6 @@ const ProductDetails = () => {
       toast.error("Download failed!");
     }
   };
-
-  //  Loader UI
-  // if (loading || !product?._id) {
-  //   return (
-  //     <div className="flex justify-center items-center min-h-[60vh]">
-  //       <span className="loading loading-dots loading-lg text-purple-600"></span>
-  //     </div>
-  //   );
-  // }
 
   //  Main UI
   return (

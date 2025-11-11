@@ -1,7 +1,12 @@
 import { use, useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { AuthContext } from "../context/AuthContext";
+import Loader from "../components/Loader";
+import usePageTitle from "../Hooks/usePageTitle";
+
+
 const MyExports = () => {
+  usePageTitle("ExportImportHub | MyExports")
   const { user } = use(AuthContext);
   const [exports, setExports] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,13 +25,7 @@ const MyExports = () => {
       });
   }, [user]);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <span className="loading loading-dots loading-lg text-purple-600"></span>
-      </div>
-    );
-  }
+  if (loading) return <Loader/>
 
   return (
     <div className="container mx-auto">

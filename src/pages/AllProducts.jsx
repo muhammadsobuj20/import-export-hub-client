@@ -1,14 +1,18 @@
 import { useLoaderData } from "react-router";
 import { useState } from "react";
 import ProductCard from "../components/ProductCard";
+import usePageTitle from "../Hooks/usePageTitle";
+import Loader from "../components/Loader";
 
 
 const AllProducts = () => {
+  usePageTitle("Export Import Hub | All Product");
   const product = useLoaderData();
 
   const [products, setProducts] = useState(product);
   const [loading, setLoading] = useState(false);
 
+  if (loading) return <Loader />;
   const handleSearch = (e) => {
     e.preventDefault();
     const search_text = e.target.search.value;

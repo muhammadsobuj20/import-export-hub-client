@@ -1,8 +1,10 @@
 import React from "react";
 import { useLoaderData } from "react-router";
 import ProductCard from "../components/ProductCard";
+import usePageTitle from "../Hooks/usePageTitle";
 
 const Home = () => {
+   usePageTitle("Export Import Hub | Home");
   const products = useLoaderData();
 
   return (

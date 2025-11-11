@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router";
 import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthContext";
+import usePageTitle from "../Hooks/usePageTitle";
 
 const Register = () => {
+   usePageTitle("Export Import Hub | Registration");
   const { createUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);

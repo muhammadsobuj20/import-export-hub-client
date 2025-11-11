@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthContext";
+import usePageTitle from "../Hooks/usePageTitle";
 
 const AddProduct = () => {
+   usePageTitle("Export Import Hub | Add Product");
   const { user } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
@@ -10,7 +12,6 @@ const AddProduct = () => {
 
     const formData = {
       name: e.target.name.value,
-      // category: e.target.category.value,
       image: e.target.image.value,
       price: e.target.price.value,
       downloads: 0,

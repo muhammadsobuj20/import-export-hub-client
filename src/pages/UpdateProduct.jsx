@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, useLoaderData } from "react-router";
-import { AuthContext } from "../context/AuthContext";
+import { useParams, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Loader from "../components/Loader";
+import usePageTitle from "../Hooks/usePageTitle";
 
 const UpdateProduct = () => {
+  usePageTitle("Export Import Hub | UpdateProduct");
   const { id } = useParams();
   const navigate = useNavigate();
-  
 
   const [product, setProduct] = useState({
     name: "",
@@ -74,20 +75,13 @@ const UpdateProduct = () => {
   };
 
   //  Loading Spinner
-  if (loading){
-    return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <span className="loading loading-dots loading-lg text-purple-600"></span>
-      </div>
-    );
-  }
-    
+  if (loading) return <Loader />;
 
-  // Form 
+  // Form
   return (
     <div className="max-w-3xl mx-auto bg-base-100 shadow-xl rounded-2xl p-6 my-8">
       <h1 className="text-3xl font-bold text-center mb-6 text-pink-600">
-         Update Product
+        Update Product
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Product Name */}
@@ -174,7 +168,7 @@ const UpdateProduct = () => {
         {/* Submit Button */}
         <button
           type="submit"
-           className="btn w-full text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
+          className="btn w-full text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
         >
           Update Product
         </button>

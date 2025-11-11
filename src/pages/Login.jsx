@@ -4,8 +4,10 @@ import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import toast from "react-hot-toast";
+import usePageTitle from "../Hooks/usePageTitle";
 
 const Login = () => {
+   usePageTitle("Export Import Hub | Login");
   const { signInUser, signInWithGoogle, forgetPassword } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");

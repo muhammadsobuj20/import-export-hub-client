@@ -23,7 +23,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-md">
+    <div className="sticky top-0 z-50 bg-white/80 mb-4 shadow-md">
       <div className="navbar container mx-auto">
         {/*  Left  */}
         <div className="navbar-start">
@@ -70,11 +70,6 @@ const NavBar = () => {
               {/* show logged in */}
               {user && (
                 <>
-                  <li>
-                    <Link to="/profile">
-                      <FaUser /> Profile
-                    </Link>
-                  </li>
                   <li>
                     <Link to="/my-exports">My Exports</Link>
                   </li>
