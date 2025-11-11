@@ -2,22 +2,23 @@ import { useLoaderData } from "react-router";
 import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 
+
 const AllProducts = () => {
   const product = useLoaderData();
-  console.log(product);
+
   const [products, setProducts] = useState(product);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const search_text = e.target.search.value;
-    // console.log(search_text)
+  
     setLoading(true);
 
     fetch(`http://localhost:3000/search?search=${search_text}`)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data)
+     
         setProducts(data);
         setLoading(false);
       });

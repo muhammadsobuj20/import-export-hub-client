@@ -28,10 +28,10 @@ const AddProduct = () => {
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then(() => {
         toast.success("Product added successfully!");
         e.target.reset();
-        console.log(data);
+       
       })
       .catch((err) => {
         toast.error("Something went wrong!");

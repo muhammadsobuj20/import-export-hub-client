@@ -39,7 +39,7 @@ const handleForgotPassword = async () => {
     await forgetPassword(email);
     toast.success("Password reset email sent! Check your inbox.");
   } catch (error) {
-    console.log(error);
+   
     toast.error(error.message);
   }
 };
@@ -50,7 +50,7 @@ const handleGoogleSignIn = () => {
       navigate(location?.state || "/");
     })
     .catch((error) => {
-      console.log(error);
+     toast.error(error.message);
     });
 };
 

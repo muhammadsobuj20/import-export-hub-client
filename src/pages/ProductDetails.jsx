@@ -27,9 +27,7 @@ const ProductDetails = () => {
       } catch (error) {
         console.error("Error fetching product details:", error);
         toast.error("Failed to load product details.");
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     fetchProduct();
@@ -129,13 +127,13 @@ const ProductDetails = () => {
   };
 
   //  Loader UI
-  if (loading || !product?._id) {
-    return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <span className="loading loading-dots loading-lg text-purple-600"></span>
-      </div>
-    );
-  }
+  // if (loading || !product?._id) {
+  //   return (
+  //     <div className="flex justify-center items-center min-h-[60vh]">
+  //       <span className="loading loading-dots loading-lg text-purple-600"></span>
+  //     </div>
+  //   );
+  // }
 
   //  Main UI
   return (
@@ -194,3 +192,198 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+// import { useContext, useEffect, useState } from "react";
+// import { useParams, useNavigate } from "react-router";
+// import { AuthContext } from "../context/AuthContext";
+// // import Swal from "sweetalert2";
+// import toast from "react-hot-toast";
+
+// const ProductDetails = () => {
+//   const { id } = useParams();
+//   const { user } = useContext(AuthContext);
+//   const navigate = useNavigate();
+
+//   const [product, setProduct] = useState({});
+//   const [loading, setLoading] = useState(true);
+//   const [quantity, setQuantity] = useState("");
+//   const [showModal, setShowModal] = useState(false);
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+
+//   // ✅ Fetch product details
+//   useEffect(() => {
+//     const fetchProduct = async () => {
+//       try {
+//         const res = await fetch(`http://localhost:3000/product/${id}`);
+//         // Handle non-ok responses (404, 500, etc.)
+//         if (!res.ok) {
+//             throw new Error(`Failed to fetch product: ${res.status}`);
+//         }
+//         const data = await res.json();
+//         setProduct(data || {});
+//       } catch (error) {
+//         console.error("Error fetching product:", error);
+//         toast.error("Failed to load product details");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchProduct();
+//   }, [id]);
+
+//   // ✅ Import Now Handler
+//   const handleImport = async () => {
+//     if (!user) {
+//       toast.error("You must be logged in to import a product!");
+//       navigate("/login");
+//       return;
+//     }
+
+//     // Basic client-side validation for quantity
+//     const quantityInt = parseInt(quantity);
+//     if (!quantityInt || quantityInt <= 0 || quantityInt > product.available_quantity) {
+//         toast.error("Please enter a valid quantity within the available stock.");
+//         return;
+//     }
+    
+//     setIsSubmitting(true);
+//     try {
+//       const res = await fetch("http://localhost:3000/imports", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           authorization: `Bearer ${user.accessToken}`,
+//         },
+//         body: JSON.stringify({
+//           productId: product._id,
+//           productName: product.name,
+//           image: product.image,
+//           price: product.price,
+//           importedQuantity: quantityInt,
+//           downloaded_by: user.email,
+//         }),
+//       });
+
+//       const data = await res.json();
+
+//       if (res.ok) {
+//         toast.success("Product imported successfully!");
+//         setShowModal(false);
+//         setQuantity("");
+
+//         // update local state to reduce quantity
+//         setProduct((prev) => ({
+//           ...prev,
+//           // FIX 2: Use available_quantity for consistent state update
+//           available_quantity: prev.available_quantity - quantityInt, 
+//         }));
+//       } else {
+//         // This handles server errors (e.g., 400 Bad Request with message)
+//         toast.error(data.message || "Import failed!");
+//       }
+//     } catch (error) {
+//       console.error("Import error:", error);
+//       toast.error("Something went wrong with the import request!");
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   if (loading) {
+//     return (
+//       <div className="flex justify-center items-center min-h-[60vh]">
+//         <span className="loading loading-dots loading-lg text-pink-600"></span>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="container mx-auto px-4 py-8">
+//       <div className="card lg:card-side bg-base-100 shadow-xl">
+//         <figure>
+//           <img
+//             src={product.image}
+//             alt={product.name}
+//             className="w-full h-[350px] object-cover"
+//           />
+//         </figure>
+//         <div className="card-body">
+//           <h2 className="card-title text-2xl font-bold">{product.name}</h2>
+//           {/* <p className="text-gray-600">{product.origin_country}</p>npm */}
+//           <p className="text-lg font-semibold text-blue-600">
+//             Price: ${product.price}
+//           </p>
+//           <p className="text-lg text-gray-700">
+//             Available Quantity:{" "}
+//             <span className="font-semibold">{product.available_quantity}</span>
+//           </p>
+//           <p className="text-gray-500">Origin: {product.origin_country}</p>
+
+//           <div className="card-actions justify-end mt-4">
+//             <button
+//               className="btn btn-primary"
+//               onClick={() => setShowModal(true)}
+//               // FIX 3: Use available_quantity for disable check
+//               disabled={product.available_quantity <= 0} 
+//             >
+//               Import Now
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/*  Modal */}
+//       {showModal && (
+//         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+//           <div className="bg-white rounded-lg p-6 w-96 shadow-lg">
+//             <h3 className="text-lg font-semibold mb-4">
+//               Import Quantity for {product.name}
+//             </h3>
+//             <input
+//               type="number"
+//               min="1"
+//               // FIX 1: Use available_quantity for max attribute
+//               max={product.available_quantity} 
+//               value={quantity}
+//               onChange={(e) => setQuantity(e.target.value)}
+//               placeholder="Enter quantity"
+//               className="input input-bordered w-full mb-4"
+//             />
+
+//             {quantity > product.available_quantity && (
+//               <p className="text-red-600 text-sm mb-2">
+//                 Quantity exceeds available stock!
+//               </p>
+//             )}
+
+//             <div className="flex justify-end gap-2">
+//               <button
+//                 className="btn btn-ghost"
+//                 onClick={() => setShowModal(false)}
+//               >
+//                 Cancel
+//               </button>
+//               <button
+//                 className="btn btn-primary"
+//                 onClick={handleImport}
+//                 disabled={
+//                   !quantity ||
+//                   quantity <= 0 ||
+//                   // FIX 1: Use available_quantity for disable check
+//                   quantity > product.available_quantity || 
+//                   isSubmitting
+//                 }
+//               >
+//                 {isSubmitting ? "Importing..." : "Submit"}
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ProductDetails;

@@ -40,7 +40,7 @@ const Register = () => {
       toast.success("Registration successful!", { id: "register" });
       form.reset();
       navigate("/");
-      console.log("User created:", result.user);
+      result.user;
     } catch (error) {
       toast.error(error.message, { id: "register" });
     }
@@ -54,7 +54,7 @@ const Register = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+      
         toast.error(error.message, { id: "create-user" });
       });
   };

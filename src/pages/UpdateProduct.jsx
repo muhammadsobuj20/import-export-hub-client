@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLoaderData } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const UpdateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
- 
+  
 
   const [product, setProduct] = useState({
     name: "",
@@ -64,7 +64,7 @@ const UpdateProduct = () => {
           .then((res) => res.json())
           .then(() => {
             toast.success(" Product updated successfully!");
-            navigate("/my-products");
+            navigate("/all-product");
           })
           .catch(() => {
             toast.error("Failed to update product!");

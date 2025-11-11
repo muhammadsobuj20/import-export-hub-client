@@ -8,6 +8,7 @@ const MyExports = () => {
 
   useEffect(() => {
     fetch(`http://localhost:3000/my-products?email=${user.email}`, {
+    method:"GET",
       headers: {
         authorization: `Bearer ${user.accessToken}`,
       },
