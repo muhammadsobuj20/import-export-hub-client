@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import usePageTitle from "../Hooks/usePageTitle";
 
 const AddProduct = () => {
-   usePageTitle("Export Import Hub | Add Product");
+   usePageTitle("ExportImportHub | AddProduct");
   const { user } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
