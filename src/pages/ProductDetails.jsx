@@ -5,16 +5,14 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthContext";
 import usePageTitle from "../Hooks/usePageTitle";
 
-
 const ProductDetails = () => {
-   usePageTitle("ExportImportHub | ProductDetails");
+  usePageTitle("ExportImportHub | ProductDetails");
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
   const [refetch, setRefetch] = useState(false);
-
 
   // Fetch product details
   useEffect(() => {
@@ -31,12 +29,11 @@ const ProductDetails = () => {
       } catch (error) {
         console.error("Error fetching product details:", error);
         toast.error("Failed to load product details.");
-      } 
+      }
     };
 
     fetchProduct();
   }, [id, refetch]);
-
 
   // Handle Delete Product
   const handleDelete = async () => {
@@ -188,6 +185,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-
-
-
