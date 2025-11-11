@@ -6,7 +6,7 @@ import Loader from "../components/Loader";
 import usePageTitle from "../Hooks/usePageTitle";
 
 const UpdateProduct = () => {
-  usePageTitle("Export Import Hub | UpdateProduct");
+  usePageTitle("ExportImportHub | UpdateProduct");
   const { id } = useParams();
   const navigate = useNavigate();
 
