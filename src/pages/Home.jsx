@@ -4,6 +4,7 @@ import ProductCard from "../components/ProductCard";
 import usePageTitle from "../Hooks/usePageTitle";
 import GlobalPartner from "../components/GlobalPartner";
 import ExportImportMission from "../components/ExportImportMission";
+import ExportImportVision from "../components/ExportImportVision";
 
 const Home = () => {
    usePageTitle("ExportImportHub | Home");
@@ -22,6 +23,7 @@ const Home = () => {
         ))}
       </div>
       <GlobalPartner/>
+      <ExportImportVision/>
       <ExportImportMission/>
     </div>
   );

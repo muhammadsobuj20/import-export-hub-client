@@ -3,7 +3,7 @@ import Marquee from "./Marquee";
 
 const GlobalPartner = () => {
   return (
-    <div className=" my-16">
+    <div className=" mt-12">
       <div className="text-center">
         <h1 className="text-2xl font-bold text-pink-600">
           Global <span className="text-purple-600">Partner</span>
