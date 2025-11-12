@@ -2,6 +2,8 @@ import React from "react";
 import { useLoaderData } from "react-router";
 import ProductCard from "../components/ProductCard";
 import usePageTitle from "../Hooks/usePageTitle";
+import GlobalPartner from "../components/GlobalPartner";
+import ExportImportMission from "../components/ExportImportMission";
 
 const Home = () => {
    usePageTitle("ExportImportHub | Home");
@@ -19,6 +21,8 @@ const Home = () => {
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
+      <GlobalPartner/>
+      <ExportImportMission/>
     </div>
   );
 };
