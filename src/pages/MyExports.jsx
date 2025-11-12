@@ -4,36 +4,48 @@ import toast from "react-hot-toast";
 import usePageTitle from "../Hooks/usePageTitle";
 
 const MyExports = () => {
-  usePageTitle("Export Import Hub | MyExports")
+  usePageTitle("Export Import Hub | MyExports");
   const { user } = useContext(AuthContext);
   const [exports, setExports] = useState([]);
-  const [editing, setEditing] = useState(null); 
+  const [editing, setEditing] = useState(null);
+  
+
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    originCountry: "",
+    originCountry: "", 
     rating: "",
-    availableQuantity: "",
+    availableQuantity: "", 
     image: "",
   });
 
-  //  Load user's exports
+  // exports
   useEffect(() => {
     if (user?.email) {
+      // It's possible the initial load error is here. Ensure VITE_API_URL is correct.
       fetch(`${import.meta.env.VITE_API_URL}/exports?email=${user.email}`)
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
         .then((data) => setExports(data))
-        .catch(() => toast.error("Failed to load exports"));
+        .catch((error) => {
+          console.error("Failed to load exports:", error);
+          toast.error("Failed to load exports");
+        });
     }
   }, [user]);
 
-  //  Input change handler
+  // Input 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  //  Add export
+  // Add export
   const handleAddExport = async (e) => {
     e.preventDefault();
     if (!user?.email) return toast.error("Please login first");
@@ -44,43 +56,60 @@ const MyExports = () => {
       createdAt: new Date(),
     };
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/exports`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newExport),
-    });
-    const data = await res.json();
-
-    if (data.insertedId || data.acknowledged) {
-      toast.success("Export added successfully!");
-      setExports((prev) => [...prev, { ...newExport, _id: data.insertedId }]);
-      setFormData({
-        name: "",
-        price: "",
-        originCountry: "",
-        rating: "",
-        availableQuantity: "",
-        image: "",
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/exports`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newExport),
       });
-    } else toast.error("Failed to add export");
+      const data = await res.json();
+
+      if (data.insertedId || data.acknowledged) {
+        toast.success("Export added successfully!");
+        
+        setExports((prev) => [...prev, { ...newExport, _id: data.insertedId || Date.now() }]); 
+        // Reset form
+        setFormData({
+          name: "",
+          price: "",
+          originCountry: "",
+          rating: "",
+          availableQuantity: "",
+          image: "",
+        });
+      } else {
+        toast.error("Failed to add export");
+      }
+    } catch (error) {
+      console.error("Error adding export:", error);
+      toast.error("Failed to add export due to a network error.");
+    }
   };
 
-  //  Delete export
+  // Delete export
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this export?")) return;
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/exports/${id}`, {
-      method: "DELETE",
-    });
-    const data = await res.json();
-    if (data.deletedCount || data.acknowledged) {
-      toast.success("Export deleted successfully!");
-      setExports((prev) => prev.filter((item) => item._id !== id));
-    } else toast.error("Failed to delete export");
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/exports/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.deletedCount || data.acknowledged) {
+        toast.success("Export deleted successfully!");
+        setExports((prev) => prev.filter((item) => item._id !== id));
+      } else {
+        toast.error("Failed to delete export");
+      }
+    } catch (error) {
+      console.error("Error deleting export:", error);
+      toast.error("Failed to delete export due to a network error.");
+    }
   };
 
-  //  Open update modal
+  // Open update modal
   const openUpdateModal = (item) => {
     setEditing(item);
+  
     setFormData({
       name: item.name,
       price: item.price,
@@ -91,47 +120,56 @@ const MyExports = () => {
     });
   };
 
-  //  Submit update
+  // Submit update
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/exports/${editing._id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      }
-    );
-    const data = await res.json();
-
-    if (data.modifiedCount || data.acknowledged) {
-      toast.success("Export updated successfully!");
-      setExports((prev) =>
-        prev.map((item) =>
-          item._id === editing._id ? { ...item, ...formData } : item
-        )
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/exports/${editing._id}`,
+        
+        // {
+        //   method: "PUT",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(formData),
+        // }
       );
-      setEditing(null);
-    } else toast.error("Failed to update");
+      const data = await res.json();
+
+      if (data.modifiedCount || data.acknowledged) {
+        toast.success("Export updated successfully!");
+        setExports((prev) =>
+          prev.map((item) =>
+            item._id === editing._id ? { ...item, ...formData } : item
+          )
+        );
+        setEditing(null); 
+      } else {
+        toast.error("Failed to update");
+      }
+    } catch (error) {
+      console.error("Error updating export:", error);
+      toast.error("Failed to update due to a network error.");
+    }
   };
 
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-center mb-6">My Exports</h1>
 
-      {/*  Export Form */}
+      {/* Export Form */}
       <form
         onSubmit={handleAddExport}
         className="bg-base-100 shadow-lg border p-6 rounded-2xl space-y-3"
       >
         <h2 className="text-xl font-semibold mb-3">Add New Export Product</h2>
         <div className="grid md:grid-cols-2 gap-3">
+    
           {[
             "name",
             "price",
-            "origin_country",
+            "originCountry", 
             "rating",
-            "available_quantity",
+            "availableQuantity",
             "image",
           ].map((field) => (
             <input
@@ -139,20 +177,21 @@ const MyExports = () => {
               type={
                 field === "price" ||
                 field === "rating" ||
-                field === "available_quantity"
+                field === "availableQuantity"
                   ? "number"
                   : "text"
               }
               name={field}
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              value={formData[field]}
+              placeholder={field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')} 
               onChange={handleChange}
               className="input input-bordered w-full"
               required={field !== "image"}
             />
           ))}
         </div>
-        <button className="btn bg-linear-to-r w-full from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-md font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg mt-3">Add Export</button>
+        <button className="btn bg-linear-to-r w-full from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-md font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg mt-3">
+          Add Export
+        </button>
       </form>
 
       {/* Export List */}
@@ -177,9 +216,9 @@ const MyExports = () => {
                 <div className="card-body">
                   <h2 className="card-title">{item.name}</h2>
                   <p>Price: ${item.price}</p>
-                  <p>Origin: {item.originCountry}</p>
+                  <p>Origin: {item.origin_country}</p>
                   <p>Rating: ⭐ {item.rating}</p>
-                  <p>Available: {item.availableQuantity}</p>
+                  <p>Available: {item.available_quantity}</p>
                   <div className="flex justify-between mt-3">
                     <label
                       htmlFor="update-modal"
