@@ -1,16 +1,52 @@
-# React + Vite
+প্রজেক্ট সম্পর্কে
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Export import  হলো একটি ওয়েব অ্যাপ্লিকেশন যেখানে মানুষ তাদের product শেয়ার করতে পারে এবং অন্যদের product new buy করতে পারে।
+এই প্ল্যাটফর্মের মাধ্যমে একজন ইউজার নিজের প্রোফাইল তৈরি করে নিজের বিস্নেস দার করতে পারে এবং অন্যদের সঙ্গে তার product share করতে পারে।
 
-Currently, two official plugins are available:
+ব্যবহৃত টেকনোলজি ও প্যাকেজসমূহ
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Frontend:
 
-## React Compiler
+React.js — পুরো অ্যাপের ইউজার ইন্টারফেস তৈরি করার জন্য।
+React Router DOM — পেজ নেভিগেশনের জন্য।
+Tailwind CSS — সুন্দর ও রেসপনসিভ ডিজাইন তৈরিতে।
+React Spring — Smooth ও physics-based অ্যানিমেশনের জন্য।
+React Hot Toast — ইউজারদের জন্য সুন্দর নোটিফিকেশন দেখানোর জন্য।
+Swiper.js — Hero section।
+sweetalert2
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+Backend & Authentication:
+Firebase Authentication — ইউজার লগইন, রেজিস্ট্রেশন, ও প্রোফাইল ম্যানেজমেন্টের জন্য।
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+মূল ফিচারসমূহ
+product লিস্ট দেখা ও বিস্তারিত দেখা
+Export Import রিকোয়েস্ট করা
+ইউজার রেজিস্ট্রেশন ও লগইন
+React Spring দিয়ে Smooth Animation
+Toast notification system
+Responsive design (mobile-first)
+
+
+
+প্যাকেজ ইনস্টলেশন
+npm install
+npm install @react-spring/web
+react-hot-toast
+swiper firebase
+react-helmet-async
+lucide-react
+framer-motion
+firebase
+npm run dev
+
+mongoDB
+note.JS
+
+
+
+**Muhammad Sobuj Hossain**
+ Live Link: https://skillswap-7100b.web.app/
+
