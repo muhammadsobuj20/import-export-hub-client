@@ -4,41 +4,29 @@ import Home from "../pages/Home";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import AllProducts from "../pages/AllProducts";
-import AddProduct from "../pages/AddProduct";
 import PrivateRoute from "./PrivateRoute";
 import ProductDetails from "../pages/ProductDetails";
 import MyImports from "../pages/MyImports";
 import MyExports from "../pages/MyExports";
-import UpdateProduct from "../pages/UpdateProduct";
 import Loader from "../components/Loader";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    hydrateFallbackElement: <Loader/>,
+    hydrateFallbackElement: <Loader />,
     children: [
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch("http://localhost:3000/latest-products"),
       },
       {
         path: "/all-product",
         element: <AllProducts />,
-        loader: () => fetch("http://localhost:3000/products"),
       },
-      
+
       {
-        path: "/add-product",
-        element: (
-          <PrivateRoute>
-            <AddProduct />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/product-details/:id",
+        path: "/product/:id",
         element: (
           <PrivateRoute>
             <ProductDetails />
@@ -64,16 +52,6 @@ export const router = createBrowserRouter([
         ),
       },
 
-      {
-        path: "/update-product/:id",
-        element: (
-          <PrivateRoute>
-            <UpdateProduct />
-          </PrivateRoute>
-        ),
-        loader: ({ params }) =>
-          fetch(`http://localhost:3000/product/${params.id}`),
-      },
       {
         path: "/login",
         element: <Login />,

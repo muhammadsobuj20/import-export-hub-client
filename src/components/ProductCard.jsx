@@ -51,7 +51,7 @@ export const ProductCard = ({ product }) => {
 
         <div className="card-actions mt-4">
           <Link
-            to={`/product-details/${_id}`}
+            to={`/product/${_id}`}
             className="w-full text-center bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-full font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg"
           >
             View Details

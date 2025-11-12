@@ -84,7 +84,7 @@ const NavBar = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-1 text-4xl font-extrabold bg-linear-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent"
+            className="flex items-center gap-1 text-2xl md:text-4xl font-extrabold bg-linear-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent"
           >
             <LuRotate3D className="text-pink-600" /> Export{" "}
             <span className="text-purple-600">Import</span>
@@ -107,15 +107,8 @@ const NavBar = () => {
                 <IoLogoModelS /> All Products
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/add-product"
-                className="hover:text-pink-600 transition-all"
-              >
-                <ImBoxAdd /> Add Product
-              </NavLink>
-            </li>
-
+        
+             
             {/* user logged in */}
             {user && (
               <>

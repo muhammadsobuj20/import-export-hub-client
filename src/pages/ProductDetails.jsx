@@ -1,182 +1,146 @@
-import { Link, useNavigate, useParams } from "react-router";
-import { useEffect, useState, useContext } from "react";
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router";
+import api from "../api/api";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 import usePageTitle from "../Hooks/usePageTitle";
 
 const ProductDetails = () => {
-  usePageTitle("ExportImportHub | ProductDetails");
-  const navigate = useNavigate();
+  usePageTitle("Export Import Hub | Products Details")
   const { id } = useParams();
-  const [product, setProduct] = useState({});
-  const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
-  const [refetch, setRefetch] = useState(false);
+
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [importQuantity, setImportQuantity] = useState(0);
 
   // Fetch product details
   useEffect(() => {
     const fetchProduct = async () => {
-      if (!id) {
-        setLoading(false);
-        return;
-      }
-
       try {
-        const res = await fetch(`http://localhost:3000/product/${id}`);
-        const data = await res.json();
-        setProduct(data || {});
-      } catch (error) {
-        console.error("Error fetching product details:", error);
-        toast.error("Failed to load product details.");
+        setLoading(true);
+        const res = await api.get(`/products/${id}`);
+        setProduct(res.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchProduct();
-  }, [id, refetch]);
+  }, [id]);
 
-  // Handle Delete Product
-  const handleDelete = async () => {
-    if (!product?._id) {
-      toast.error("Product ID not found!");
-      return;
-    }
+  if (loading || !product) return <Loader />;
 
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "This product will be permanently deleted!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#e11d48",
-      cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, delete it!",
-    });
-
-    if (result.isConfirmed) {
-      try {
-        const res = await fetch(
-          `http://localhost:3000/product/${product._id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const data = await res.json();
-
-        if (data.success) {
-          toast.success("Product deleted successfully!");
-          navigate("/all-product");
-        } else {
-          toast.error("Delete failed!");
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error("Something went wrong!");
-      }
-    }
-  };
-
-  //  Handle Download (Import)
-  const handleDownload = async () => {
-    if (!product?._id) {
-      toast.error("Product ID not found!");
-      navigate("/all-product");
-      return;
-    }
+  // Handle Import Submit
+  const handleImport = async () => {
+    if (!user?.email) return toast.error("Please login first!");
+    if (importQuantity <= 0) return toast.error("Enter valid quantity");
+    if (importQuantity > product.availableQuantity)
+      return toast.error("Quantity exceeds available stock");
 
     try {
-      const checkRes = await fetch(
-        `http://localhost:3000/imports/check/${product._id}?email=${user?.email}`
-      );
-      const checkData = await checkRes.json();
-
-      if (checkData.exists) {
-        toast.error("You already downloaded this product!");
-        return;
-      }
-
-      const finalProduct = {
-        name: product?.name,
-        origin_country: product?.origin_country,
-        image: product?.image,
-        downloaded_by: user?.email,
-        downloaded_at: new Date(),
-      };
-
-      const res = await fetch(`http://localhost:3000/imports/${product._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(finalProduct),
+      const res = await api.post(`/import/${id}`, {
+        email: user.email,
+        importedQuantity: Number(importQuantity),
       });
-
-      const data = await res.json();
-
-      if (data.success) {
+      if (res.data.success) {
         toast.success("Product imported successfully!");
-        setRefetch(!refetch);
-      } else {
-        toast.error("Import failed!");
+        setProduct((prev) => ({
+          ...prev,
+          availableQuantity: prev.availableQuantity - importQuantity,
+        }));
+        setModalOpen(false);
+        setImportQuantity(0);
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Download failed!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to import product");
     }
   };
 
-  //  Main UI
   return (
-    <div className="max-w-5xl mx-auto p-4 md:p-6 lg:p-8">
-      <div className="card bg-base-100 shadow-xl border border-gray-200 rounded-2xl overflow-hidden">
-        <div className="flex flex-col md:flex-row gap-8 p-6 md:p-8">
-          {/* Product Image */}
-          <div className="shrink-0 w-full md:w-1/2">
-            <img
-              src={product?.image || "/placeholder.png"}
-              alt={product?.name || "Product"}
-              className="w-full object-cover rounded-xl shadow-md"
+    <div className="container mx-auto p-6">
+      <div className="card lg:card-side bg-base-100 shadow-xl rounded-2xl overflow-hidden">
+        <figure className="lg:w-1/2">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-full w-full object-cover"
+          />
+        </figure>
+        <div className="card-body lg:w-1/2">
+          <h2 className="card-title text-3xl font-bold">{product.name}</h2>
+          <p className="text-lg">Price: ${product.price}</p>
+          <p className="text-lg">Origin: {product.origin_country}</p>
+          <p className="text-lg">Rating: ⭐ {product.rating}</p>
+          <p className="text-lg">
+            Available Quantity: {product.available_quantity}
+          </p>
+
+          {/* Import Button */}
+          <label
+            htmlFor="import-modal"
+            className={`btn  bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-full font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg mt-4 ${
+              product.available_quantity === 0 ? "btn-disabled" : ""
+            }`}
+            onClick={() => setModalOpen(true)}
+          >
+            Import Now
+          </label>
+        </div>
+      </div>
+
+      {/* DaisyUI Modal */}
+      <input
+        type="checkbox"
+        id="import-modal"
+        className="modal-toggle"
+        checked={modalOpen}
+        readOnly
+      />
+      <div className="modal">
+        <div className="modal-box relative">
+          <label
+            htmlFor="import-modal"
+            className="btn btn-sm btn-circle absolute right-2 top-2 text-center bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-full font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg"
+            onClick={() => {
+              setModalOpen(false);
+              setImportQuantity(0);
+            }}
+          >
+            ✕
+          </label>
+          <h3 className="font-bold text-lg mb-4">
+            Import "{product.name}"
+          </h3>
+          <div className="flex flex-col gap-3">
+            <input
+              type="number"
+              placeholder="Enter quantity"
+              className="input input-bordered w-full"
+              value={importQuantity}
+              onChange={(e) => setImportQuantity(Number(e.target.value))}
+              min={1}
+              max={product.available_quantity}
             />
-          </div>
-
-          {/* Product Info */}
-          <div className="flex flex-col justify-center space-y-4 w-full md:w-1/2">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-              {product?.name}
-            </h1>
-
-            <div className="flex gap-3">
-              <div className="badge badge-lg badge-outline text-pink-600 border-pink-600 font-medium">
-                {product?.origin_country}
-              </div>
-            </div>
-
-            {/* Buttons */}
-            <div className="flex gap-3 mt-6">
-              <Link
-                to={`/update-product/${product._id}`}
-                className="btn  text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                Update
-              </Link>
-
-              <button
-                onClick={handleDownload}
-                className="btn text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                Download
-              </button>
-
-              <Link
-                onClick={handleDelete}
-                className="btn text-white font-semibold py-2 mt-4 rounded-full bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                Delete
-              </Link>
-            </div>
+            <button
+            className="w-full text-center bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-full font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg"
+              disabled={
+                importQuantity <= 0 || importQuantity > product.available_quantity
+              }
+              onClick={handleImport}
+            >
+              Submit
+            </button>
+            {importQuantity > product.available_quantity && (
+              <p className="text-red-500 text-sm">
+                Quantity cannot exceed available stock!
+              </p>
+            )}
           </div>
         </div>
       </div>

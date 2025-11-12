@@ -5,7 +5,7 @@ const GlobalPartner = () => {
   return (
     <div className=" mt-12">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-pink-600">
+        <h1 className="text-2xl md:text-4xl font-bold text-pink-600">
           Global <span className="text-purple-600">Partner</span>
         </h1>
         <p className=" my-3">Decades long relationships with global giants</p>
