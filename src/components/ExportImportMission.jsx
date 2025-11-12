@@ -10,9 +10,9 @@ const ExportImportMission = () => {
       <div className="flex flex-col md:flex-row-reverse items-center justify-center gap-8 px-6 container mx-auto ">
         <div className="md:w-1/3">
           <img
-            src="/images/mission.jpg"
-            alt="Company Mission"
-            className="rounded-2xl shadow-lg"
+            src="https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=1200"
+            alt="Mission - Export Import Trade"
+            className="rounded-2xl shadow-lg object-cover"
           />
         </div>
 

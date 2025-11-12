@@ -1,5 +1,5 @@
 import React from "react";
-import { Globe2, Ship, Warehouse } from "lucide-react"; // lucide-react icons
+import { Globe2, Ship, Warehouse } from "lucide-react"; 
 import { Link } from "react-router";
 
 const ExportImportVision = () => {
@@ -8,9 +8,9 @@ const ExportImportVision = () => {
       {/* Left side: Image */}
       <div className="md:w-1/3">
         <img
-          src="/images/vision.jpg"
-          alt="Company Vision"
-          className="rounded-2xl shadow-lg"
+          src="https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?_gl=1*elqhgr*_ga*ODQ1NDU2Nzk4LjE3NjI2NzcyMTE.*_ga_8JE65Q40S6*czE3NjI5NDAyMDUkbzIkZzEkdDE3NjI5NDA1OTIkajMyJGwwJGgw"
+          alt="Vision - Global Business Growth"
+          className="rounded-2xl shadow-lg object-cover"
         />
       </div>
 
@@ -60,11 +60,14 @@ const ExportImportVision = () => {
         </div>
 
         {/* Know More button */}
-        <button> 
-          <Link to="/" className="mt-6 flex items-center gap-2 text-white 
-        bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-700 hover:to-pink-600 duration-300 shadow-md px-6 py-2 rounded-full transition-all">
-          Know More →
-        </Link>
+        <button>
+          <Link
+            to="/"
+            className="mt-6 flex items-center gap-2 text-white 
+        bg-linear-to-r from-pink-500 to-purple-600 hover:from-purple-700 hover:to-pink-600 duration-300 shadow-md px-6 py-2 rounded-full transition-all"
+          >
+            Know More →
+          </Link>
         </button>
       </div>
     </section>

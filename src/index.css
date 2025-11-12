@@ -21,7 +21,26 @@
   background: rgb(243, 226, 226);
 }
 
-@keyframes marquee {
+@keyframes marquee-horizontal {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee-horizontal {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee-horizontal 25s linear infinite;
+}
+
+.animate-marquee-horizontal:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-text {
   0% {
     transform: translateX(100%);
   }
@@ -32,10 +51,6 @@
 
 .animate-marquee {
   display: inline-block;
-  animation: marquee 20s linear infinite;
-}
-
-/* Hover */
-.animate-marquee:hover {
-  animation-play-state: paused;
+  white-space: nowrap;
+  animation: marquee-text 20s linear infinite;
 }

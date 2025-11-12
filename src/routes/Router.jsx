@@ -10,11 +10,13 @@ import ProductDetails from "../pages/ProductDetails";
 import MyImports from "../pages/MyImports";
 import MyExports from "../pages/MyExports";
 import UpdateProduct from "../pages/UpdateProduct";
+import Loader from "../components/Loader";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    hydrateFallbackElement: <Loader/>,
     children: [
       {
         path: "/",
