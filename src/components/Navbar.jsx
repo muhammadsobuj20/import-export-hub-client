@@ -61,12 +61,7 @@ const NavBar = () => {
                   <IoLogoModelS /> All Products
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/add-product">
-                  <ImBoxAdd /> Add Product
-                </NavLink>
-              </li>
-
+              
               {/* show logged in */}
               {user && (
                 <>
