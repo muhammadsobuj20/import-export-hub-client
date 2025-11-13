@@ -80,7 +80,7 @@ const MyImports = () => {
   return (
     <div className="container mx-auto p-6">
       {" "}
-      <h1 className="text-3xl font-bold mb-6 text-center">My Imports</h1>
+        <h1 className="text-2xl text-pink-600 md:text-4xl font-bold mb-5 text-center">My<span className="text-purple-600"> Imports</span></h1>
       {imports.length === 0 ? (
         <div className="text-center text-lg text-gray-600">
           You haven’t imported any products yet.

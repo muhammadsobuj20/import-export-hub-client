@@ -2,35 +2,31 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import usePageTitle from "../Hooks/usePageTitle";
+import api from "../api/api";
 
 const MyExports = () => {
   usePageTitle("Export Import Hub | MyExports");
   const { user } = useContext(AuthContext);
   const [exports, setExports] = useState([]);
   const [editing, setEditing] = useState(null);
-  
 
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    originCountry: "", 
+    originCountry: "",
     rating: "",
-    availableQuantity: "", 
+    availableQuantity: "",
     image: "",
   });
 
-  // exports
+  // Load user exports
   useEffect(() => {
     if (user?.email) {
-      // It's possible the initial load error is here. Ensure VITE_API_URL is correct.
-      fetch(`${import.meta.env.VITE_API_URL}/exports?email=${user.email}`)
+      api
+        .get(`/exports?email=${user.email}`)
         .then((res) => {
-          if (!res.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return res.json();
+          setExports(res.data);
         })
-        .then((data) => setExports(data))
         .catch((error) => {
           console.error("Failed to load exports:", error);
           toast.error("Failed to load exports");
@@ -38,10 +34,9 @@ const MyExports = () => {
     }
   }, [user]);
 
-  // Input 
+  // Input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -57,19 +52,13 @@ const MyExports = () => {
     };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/exports`);
-      //    {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(newExport),
-      // });
-      const data = await res.json();
-
-      if (data.insertedId || data.acknowledged) {
+      const res = await api.post("/exports", newExport);
+      if (res.data.insertedId || res.data.acknowledged) {
         toast.success("Export added successfully!");
-        
-        setExports((prev) => [...prev, { ...newExport, _id: data.insertedId || Date.now() }]); 
-        // Reset form
+        setExports((prev) => [
+          ...prev,
+          { ...newExport, _id: res.data.insertedId || Date.now() },
+        ]);
         setFormData({
           name: "",
           price: "",
@@ -91,11 +80,8 @@ const MyExports = () => {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this export?")) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/exports/${id}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (data.deletedCount || data.acknowledged) {
+      const res = await api.delete(`/exports/${id}`);
+      if (res.data.deletedCount || res.data.acknowledged) {
         toast.success("Export deleted successfully!");
         setExports((prev) => prev.filter((item) => item._id !== id));
       } else {
@@ -110,13 +96,12 @@ const MyExports = () => {
   // Open update modal
   const openUpdateModal = (item) => {
     setEditing(item);
-  
     setFormData({
       name: item.name,
       price: item.price,
-      originCountry: item.originCountry,
+      originCountry: item.origin_country,
       rating: item.rating,
-      availableQuantity: item.availableQuantity,
+      availableQuantity: item.available_quantity,
       image: item.image,
     });
   };
@@ -125,25 +110,15 @@ const MyExports = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/exports/${editing._id}`,
-        
-        // {
-        //   method: "PUT",
-        //   headers: { "Content-Type": "application/json" },
-        //   body: JSON.stringify(formData),
-        // }
-      );
-      const data = await res.json();
-
-      if (data.modifiedCount || data.acknowledged) {
+      const res = await api.put(`/exports/${editing._id}`, formData);
+      if (res.data.modifiedCount || res.data.acknowledged) {
         toast.success("Export updated successfully!");
         setExports((prev) =>
           prev.map((item) =>
             item._id === editing._id ? { ...item, ...formData } : item
           )
         );
-        setEditing(null); 
+        setEditing(null);
       } else {
         toast.error("Failed to update");
       }
@@ -155,20 +130,21 @@ const MyExports = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">My Exports</h1>
+      <h1 className="text-2xl text-pink-600 md:text-4xl font-bold mb-5 text-center">
+        My<span className="text-purple-600"> Exports</span>
+      </h1>
 
       {/* Export Form */}
       <form
         onSubmit={handleAddExport}
         className="bg-base-100 shadow-lg border p-6 rounded-2xl space-y-3"
       >
-        <h2 className="text-xl font-semibold mb-3">Add New Export Product</h2>
+        <h2 className="text-xl font-semibold mb-3 text-purple-600">Add New Export Product</h2>
         <div className="grid md:grid-cols-2 gap-3">
-    
           {[
             "name",
             "price",
-            "originCountry", 
+            "originCountry",
             "rating",
             "availableQuantity",
             "image",
@@ -183,7 +159,10 @@ const MyExports = () => {
                   : "text"
               }
               name={field}
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')} 
+              placeholder={
+                field.charAt(0).toUpperCase() +
+                field.slice(1).replace(/([A-Z])/g, " $1")
+              }
               onChange={handleChange}
               className="input input-bordered w-full"
               required={field !== "image"}
@@ -197,7 +176,11 @@ const MyExports = () => {
 
       {/* Export List */}
       <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">My Exported Products</h2>
+         <h1 className="text-2xl font-semibold text-pink-600">
+          My Exported  
+          <span className="text-purple-600"> Products</span>
+         </h1>
+      
         {exports.length === 0 ? (
           <p className="text-gray-500 text-center">No exports added yet.</p>
         ) : (
@@ -223,13 +206,13 @@ const MyExports = () => {
                   <div className="flex justify-between mt-3">
                     <label
                       htmlFor="update-modal"
-                      className="btn btn-info btn-sm"
+                      className="btn bg-green-600 text-white btn-sm"
                       onClick={() => openUpdateModal(item)}
                     >
                       Update
                     </label>
                     <button
-                      className="btn btn-error btn-sm"
+                      className="btn bg-red-600 text-white btn-sm"
                       onClick={() => handleDelete(item._id)}
                     >
                       Delete
@@ -242,7 +225,7 @@ const MyExports = () => {
         )}
       </div>
 
-      {/* DaisyUI Modal */}
+      {/* Update Modal */}
       <input
         type="checkbox"
         id="update-modal"
@@ -286,7 +269,7 @@ const MyExports = () => {
               />
             ))}
             <div className="modal-action">
-              <button type="submit" className="btn btn-primary w-full">
+              <button type="submit" className="btn bg-linear-to-r w-full from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-md font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg mt-3">
                 Save Changes
               </button>
             </div>
