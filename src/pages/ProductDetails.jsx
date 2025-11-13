@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import api from "../api/api";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
@@ -82,7 +82,7 @@ const ProductDetails = () => {
           </p>
 
           {/* Import Button */}
-          <label
+          <Link to="/all-product"
             htmlFor="import-modal"
             className={`btn  bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 text-white py-2 rounded-full font-medium hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-lg mt-4 ${
               product.available_quantity === 0 ? "btn-disabled" : ""
@@ -90,7 +90,7 @@ const ProductDetails = () => {
             onClick={() => setModalOpen(true)}
           >
             Import Now
-          </label>
+          </Link>
         </div>
       </div>
 

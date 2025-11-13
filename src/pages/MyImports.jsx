@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 import usePageTitle from "../Hooks/usePageTitle";
 
 const MyImports = () => {
-  usePageTitle("Export Import Hub | MyImports")
+  usePageTitle("Export Import Hub | MyImports");
   const { user } = useContext(AuthContext);
   const [imports, setImports] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,15 +72,16 @@ const MyImports = () => {
         </div>
       );
     }
-
   };
   if (loading) {
-    return <Loader/>;
+    return <Loader />;
   }
   return (
     <div className="container mx-auto p-6">
       {" "}
-        <h1 className="text-2xl text-pink-600 md:text-4xl font-bold mb-5 text-center">My<span className="text-purple-600"> Imports</span></h1>
+      <h1 className="text-2xl text-pink-600 md:text-4xl font-bold mb-5 text-center">
+        My<span className="text-purple-600"> Imports</span>
+      </h1>
       {imports.length === 0 ? (
         <div className="text-center text-lg text-gray-600">
           You haven’t imported any products yet.
