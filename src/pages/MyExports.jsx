@@ -57,11 +57,12 @@ const MyExports = () => {
     };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/exports`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newExport),
-      });
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/exports`);
+      //    {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(newExport),
+      // });
       const data = await res.json();
 
       if (data.insertedId || data.acknowledged) {
